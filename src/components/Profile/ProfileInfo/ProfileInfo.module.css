@@ -10,7 +10,7 @@
 }
 
 .profilePage img{
-    width: 64px;
+    width: 128px;
     border-radius: 50%;
     border: 2px solid black;
     margin-right: 30px;
@@ -21,8 +21,8 @@
 }
 
 .profileName{
- font-size: 30px;
- text-decoration: underline;
+     font-size: 30px;
+     text-decoration: underline;
 }
 
 .contacts h3{

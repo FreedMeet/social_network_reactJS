@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import classes from './Pagination.module.css'
+import Button from "../button/Button";
 
 let Pagination = ({totalUsersCount, pageSize, currentPage, onPageChanged, portionSize = 5}) => {
 
@@ -18,24 +19,24 @@ let Pagination = ({totalUsersCount, pageSize, currentPage, onPageChanged, portio
     return (
         <div className={classes.selectedPage}>
 
-            {portionNumber > 1 && <button className={classes.paginationButtons} onClick={() => {
+            {portionNumber > 1 && <Button width={'100px'} height={'30px'} onClick={() => {
                 setPortionNumber(portionNumber - 1)
-            }}>Prev</button>}
+            }}>Prev</Button>}
             <div className={classes.buttonZone}>
                 {
                     pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                         .map(p => {
-                            return <button className={currentPage === p && classes.active}
+                            return <Button width={'30px'} height={'30px'} className={currentPage === p && classes.active}
                                            onClick={() => {
                                                onPageChanged(p);
-                                           }}>{p}</button>
+                                           }}>{p}</Button>
                         })
                 }
             </div>
 
-            {portionCount > portionNumber && <button className={classes.paginationButtons} onClick={() => {
+            {portionCount > portionNumber && <Button width={'100px'} height={'30px'} onClick={() => {
                 setPortionNumber(portionNumber + 1)
-            }}>Next</button>}
+            }}>Next</Button>}
 
         </div>
 

@@ -1,6 +1,7 @@
 import classes from './Users.module.css'
 import userPhoto from '../../assets/images/users.png'
 import {NavLink} from 'react-router-dom';
+import Button from "../Common/button/Button";
 
 let Users = ({user, followingInProgress, unFollowTC, followTC}) => {
     return (
@@ -11,14 +12,20 @@ let Users = ({user, followingInProgress, unFollowTC, followTC}) => {
                          src={user.photos.small != null ? user.photos.small : userPhoto}/>
                 </NavLink>
                 {user.followed
-                    ? <button disabled={followingInProgress.some(id => id === user.id)}
-                              onClick={() => {
-                                  unFollowTC(user.id)
-                              }}>unfollow</button>
-                    : <button disabled={followingInProgress.some(id => id === user.id)}
-                              onClick={() => {
-                                  followTC(user.id)
-                              }}>follow</button>}
+                    ? <Button
+                        width={'150px'}
+                        height={'40px'}
+                        disabled={followingInProgress.some(id => id === user.id)}
+                        onClick={() => {
+                            unFollowTC(user.id)
+                        }}>unfollow</Button>
+                    : <Button
+                        width={'150px'}
+                        height={'40px'}
+                        disabled={followingInProgress.some(id => id === user.id)}
+                        onClick={() => {
+                            followTC(user.id)
+                        }}>follow</Button>}
             </div>
             <div className={classes.profileInfo}>
                 <div className={classes.profileName}>

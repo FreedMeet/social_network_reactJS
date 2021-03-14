@@ -19,24 +19,6 @@
     align-items: center;
 }
 
-.profilePhoto button{
-    font-size: 16px;
-    width: 150px;
-    height: 40px;
-
-    background-color: transparent;
-    border: 1px solid black;
-    border-radius: 15px;
-
-    cursor: pointer;
-
-    transition: .5s;    
-}
-
-.profilePhoto button:hover{
-    background-color: #fff;
-}
-
 .profileInfo{
     width: 90%;
     font-size: 16px;

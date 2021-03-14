@@ -1,15 +1,14 @@
 import React from 'react';
 import Profile from './Profile';
-import { connect } from 'react-redux';
-import { getProfileTC, getStatusTC, updateStatusTC } from '../../redux/profileReducer';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'redux';
-import  { withAuthRedirect }  from '../../hoc/withAuthRedirect'
+import {connect} from 'react-redux';
+import {getProfileTC, getStatusTC, updateStatusTC} from '../../redux/profileReducer';
+import {withRouter} from 'react-router-dom';
+import {compose} from 'redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect'
 
 class ProfileContainer extends React.Component {
 
-    componentDidMount() {
-
+    refreshProfile() {
         let userId = this.props.match.params.userId;
 
         if (!userId) {
@@ -18,12 +17,23 @@ class ProfileContainer extends React.Component {
 
         this.props.getProfileTC(userId);
         this.props.getStatusTC(userId);
+    }
+
+    componentDidMount() {
+        this.refreshProfile();
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.refreshProfile();
+        }
     };
 
     render() {
         return (
             <Profile
                 {...this.props}
+                isOwner={!this.props.match.params.userId}
                 profile={this.props.profile}
                 status={this.props.status}
                 updateStatusTC={this.props.updateStatusTC}
@@ -39,7 +49,7 @@ let mapStateToProps = (state) => ({
 });
 
 export default compose(
-    connect(mapStateToProps, { getProfileTC, getStatusTC, updateStatusTC }),
+    connect(mapStateToProps, {getProfileTC, getStatusTC, updateStatusTC}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer);

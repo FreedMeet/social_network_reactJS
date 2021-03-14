@@ -4,18 +4,19 @@ import classes from './MyPosts.module.css'
 import Post from './Post/Post'
 import { required, maxLengthCreator } from '../../../utils/validators'
 import {Textarea} from '../../Common/formControls/formControls';
+import Button from "../../Common/button/Button";
 
 const maxLength10 = maxLengthCreator(10);
 
 const MyPostForm = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form className={classes.form} onSubmit={props.handleSubmit}>
             <Field
                 placeholder="What happens?"
                 name={'newPostText'}
                 component={Textarea}
                 validate={[required, maxLength10]} />
-            <button type='submit'>Add post</button>
+            <Button width={'20%'} height={'40px'} type='submit'>Add post</Button>
         </form>
     )
 };

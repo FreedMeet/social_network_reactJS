@@ -6,6 +6,7 @@ import { required, maxLengthCreator } from '../../utils/validators'
 import { connect } from 'react-redux';
 import { loginUserTC } from '../../redux/authReducer';
 import { Redirect } from 'react-router-dom';
+import Button from "../Common/button/Button";
 
 const maxLength45 = maxLengthCreator(45)
 
@@ -30,7 +31,7 @@ const LoginForm = ({handleSubmit, error}) => {
                 name={'rememberMe'}
                 type='checkbox'
             />
-            <button type='submit'>login</button>
+            <Button width={'300px'} height={'40px'} type='submit'>login</Button>
             <div style={{marginTop: 10, color: 'red', fontSize: 20}}>{ error }</div>
         </form>
     );

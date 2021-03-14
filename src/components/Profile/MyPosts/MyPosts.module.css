@@ -4,6 +4,7 @@
     border-radius: 10px;
     height: 60vh;
     overflow: scroll;
+    width: 60%;
 }
 
 .formPost textarea{
@@ -26,24 +27,7 @@
 }
 
 .formPost button{
-    margin-top: 20px;
-
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-
-    width: 20%;
-    height: 40px;
-
-    background-color: transparent;
-    border: 1px solid black;
-    border-radius: 15px;
-
-    cursor: pointer;
-
-    transition: .5s;
-}
-
-.formPost button:hover{
-    background-color: #fff;
 }

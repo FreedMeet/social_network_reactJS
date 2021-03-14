@@ -5,6 +5,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form';
 import {Textarea} from '../Common/formControls/formControls';
 import { required } from '../../utils/validators'
+import Button from "../Common/button/Button";
 
 const DialogsForm = (props) => {
     return (
@@ -14,7 +15,7 @@ const DialogsForm = (props) => {
             name={'newMessageText'} 
             component={Textarea}
             validate={ required } />
-            <button type='submit'>send</button>
+            <Button width={'10%'} height={'104px'} type='submit'>send</Button>
         </form>
     );
 };

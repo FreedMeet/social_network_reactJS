@@ -2,6 +2,7 @@ import classes from './ProfileInfo.module.css'
 import Preloader from '../../Common/Preloader/Preloader'
 import userPhoto from '../../../assets/images/users.png'
 import ProfileStatusWithHooks from './ProfileStatusWithHooks'
+import Button from "../../Common/button/Button";
 
 const ProfileInfo = (props) => {
 
@@ -24,8 +25,12 @@ const ProfileInfo = (props) => {
                 </div>
             </div>
 
+            <div>
+                {props.isOwner && <Button width={'150px'} height={'30px'}>Change photo</Button>}
+            </div>
 
-            {/* <div className={classes.contacts}>
+
+            <div className={classes.contacts}>
                 <h3>Contacts</h3>
                 <p>facebook: <a href='#'>{props.profile.contacts.facebook}</a></p>
                 <p>website: <a href='#'>{props.profile.contacts.website}</a></p>
@@ -35,7 +40,7 @@ const ProfileInfo = (props) => {
                 <p>youtube: <a href='#'>{props.profile.contacts.youtube}</a></p>
                 <p>github: <a href='#'>{props.profile.contacts.github}</a></p>
                 <p>mainLink: <a href='#'>{props.profile.contacts.mainLink}</a></p>
-            </div> */}
+            </div>
         </div>
     )
 }

@@ -19,20 +19,3 @@ header img{
   align-self: center;
   margin-right: 10px;
 }
-
-.loginBlock button {
-  width: 120px;
-  height: 40px;
-  background-color: transparent;
-  border: 1px solid black;
-  border-radius: 15px;
-
-  cursor: pointer;
-
-  transition: .5s;
-  text-transform: uppercase;
-}
-
-.loginBlock button:hover{
-  background-color: #fff;
-}

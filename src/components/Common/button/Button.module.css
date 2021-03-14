@@ -1,0 +1,14 @@
+button{
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    transition: .5s;
+    text-transform: uppercase;
+}
+
+button:hover{
+    background-color: #fff;
+}
