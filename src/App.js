@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {HashRouter, Route, withRouter} from 'react-router-dom';
 import {connect, Provider} from 'react-redux';
 import {initializeAppTC} from "./redux/appReducer";
 import UsersContainer from './components/Users/UsersContainer';
@@ -58,11 +58,11 @@ const AppContainer = compose(
 const MainApp = () => {
     return (
         <React.StrictMode>
-            <BrowserRouter>
+            <HashRouter>
                 <Provider store={store}>
                     <AppContainer/>
                 </Provider>
-            </BrowserRouter>
+            </HashRouter>
         </React.StrictMode>
     )
 };
