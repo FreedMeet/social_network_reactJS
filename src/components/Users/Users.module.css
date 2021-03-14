@@ -1,0 +1,56 @@
+.userAvatar {
+    width: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid black;
+}
+
+.profileCard{
+    display: flex;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.profilePhoto{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profilePhoto button{
+    font-size: 16px;
+    width: 150px;
+    height: 40px;
+
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    transition: .5s;    
+}
+
+.profilePhoto button:hover{
+    background-color: #fff;
+}
+
+.profileInfo{
+    width: 90%;
+    font-size: 16px;
+    margin-left: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.profileInfo p{
+    margin: 15px 0 0;
+    font-size: 25px;
+    text-decoration: underline;
+}
+
+.profileBlock{
+    overflow: hidden;
+    height: 80vh;
+}

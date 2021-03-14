@@ -1,0 +1,64 @@
+.dialogs{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 15px;
+}
+
+.dialog{
+    padding: 40px;
+    border-bottom: 2px solid black;
+    text-align: center;
+}
+
+.activeLink{
+    color: black;
+    text-decoration: underline;
+    font-size: 20px;
+}
+
+.messagesItem{
+    padding: 40px;
+    border-bottom: 2px solid black;
+}
+
+.form button:hover{
+    background-color: #fff;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+.form textarea{
+    resize: none;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 90%;
+    height: 80px;
+    font-size: 16px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.form button{
+    height: 104px;
+    width: 10%;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    transition: .5s;
+    text-transform: uppercase;
+
+}

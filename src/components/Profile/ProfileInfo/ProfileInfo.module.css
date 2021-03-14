@@ -1,0 +1,36 @@
+.profilePage{
+    display: flex;
+    flex-direction: column;
+}
+
+.profilePage div:first-child{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profilePage img{
+    width: 64px;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin-right: 30px;
+}
+
+.profileInfo div{
+    padding: 5px;
+}
+
+.profileName{
+ font-size: 30px;
+ text-decoration: underline;
+}
+
+.contacts h3{
+    text-decoration: underline;
+}
+
+.contacts p > a{
+    color: royalblue;
+    font-weight: bold;
+}
+

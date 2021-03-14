@@ -1,0 +1,45 @@
+*{
+	/* margin: 0; */
+	/* padding: 0; */
+	/* box-sizing: border-box; */
+	scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  width: 0px;
+  background: rgba(255, 255, 255, 0.0);
+}
+
+.app-wrapper{
+  padding: 15px;
+  display: grid;
+  height: 95vh;
+
+  grid-template-areas: 
+    "header header"
+    "nav content"
+  ;
+
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 10px;
+}
+
+.content{
+  grid-area: content;
+
+  border: 1px solid black;
+  border-radius: 10px;
+
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  padding: 20px;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+  padding: 3px;
+}
+*:active, *:hover, *:focus {
+  outline: 0;
+  outline-offset: 0;
+}

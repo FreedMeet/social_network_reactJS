@@ -1,0 +1,38 @@
+header{
+  grid-area: header;
+
+  display: flex;
+  justify-content: space-between;
+
+  padding: 5px;
+
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+header img{
+  width: 50px;
+}
+
+.loginBlock{
+  font-size: 18px;
+  align-self: center;
+  margin-right: 10px;
+}
+
+.loginBlock button {
+  width: 120px;
+  height: 40px;
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 15px;
+
+  cursor: pointer;
+
+  transition: .5s;
+  text-transform: uppercase;
+}
+
+.loginBlock button:hover{
+  background-color: #fff;
+}

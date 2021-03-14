@@ -1,0 +1,9 @@
+.error {
+    color: red;
+    margin-left: 5%;
+    margin-top: 10px;
+    font-size: 18px;
+}
+.form{
+    width: 100%;
+}
