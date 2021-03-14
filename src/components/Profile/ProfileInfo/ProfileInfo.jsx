@@ -7,27 +7,35 @@ import Button from "../../Common/button/Button";
 const ProfileInfo = (props) => {
 
     if (!props.profile) {
-        return <Preloader />
+        return <Preloader/>
     }
+
+    const onMainPhotoSelected = (e) => {
+        if (e.target.files.length) {
+            props.savePhotoTC(e.target.files[0])
+        }
+    };
 
     return (
         <div className={classes.profilePage}>
 
             <div>
-                <img src={props.profile.photos.small != null ? props.profile.photos.small : userPhoto} />
+                <img src={props.profile.photos.small != null ? props.profile.photos.small : userPhoto}/>
                 <div className={classes.profileInfo}>
                     <div className={classes.profileName}>
                         {props.profile.fullName}
                     </div>
-                    <div style={{ marginTop: '-20px' }}>
-                        <ProfileStatusWithHooks status={props.status} updateStatusTC={props.updateStatusTC} />
+                    <div style={{marginTop: '-20px'}}>
+                        <ProfileStatusWithHooks status={props.status} updateStatusTC={props.updateStatusTC}/>
                     </div>
                 </div>
             </div>
-
-            <div>
-                {props.isOwner && <Button width={'150px'} height={'30px'}>Change photo</Button>}
+            {props.isOwner &&
+            <div className={classes.file_upload}>
+                <Button width={'150px'} height={'30px'}>Change photo</Button>
+                <input type="file" onChange={onMainPhotoSelected}/>
             </div>
+            }
 
 
             <div className={classes.contacts}>
@@ -44,5 +52,6 @@ const ProfileInfo = (props) => {
         </div>
     )
 }
+
 
 export default ProfileInfo

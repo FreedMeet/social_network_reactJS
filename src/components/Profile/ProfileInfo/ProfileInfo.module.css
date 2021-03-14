@@ -34,3 +34,33 @@
     font-weight: bold;
 }
 
+.file_upload {
+    position: relative;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 22px;
+    border: 1px solid black;
+    border-radius: 14px;
+    transition: .5s;
+    width: 40%;
+}
+.file_upload:hover{
+    background-color: #fff;
+}
+.file_upload input[type=file]{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(20);
+    letter-spacing: 10em;     /* IE 9 fix */
+    -ms-transform: scale(20); /* IE 9 fix */
+    opacity: 0;
+    cursor: pointer;
+}
+.file_upload button{
+    border: none;
+}
+
+
