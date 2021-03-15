@@ -25,11 +25,11 @@
      text-decoration: underline;
 }
 
-.contacts h3{
+.profile h3{
     text-decoration: underline;
 }
 
-.contacts p > a{
+.profile p > a{
     color: royalblue;
     font-weight: bold;
 }
@@ -61,6 +61,39 @@
 }
 .file_upload button{
     border: none;
+}
+.profileFormFields{
+    overflow: scroll;
+    height: 370px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.profileFormFields h3{
+    text-align: center;
+}
+.profileFormFields input:not([type="checkbox"]) {
+    width: 300px;
+    height: 15px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: transparent;
+    font-size: 14px;
+    margin-bottom: -10px;
+}
+
+.profileFormFields textarea{
+    resize: none;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 45px;
+    font-size: 14px;
+    padding: 10px;
+    background: transparent;
 }
 
 

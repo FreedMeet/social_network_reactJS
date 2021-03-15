@@ -12,9 +12,10 @@ const Profile = (props) => {
                 profile={props.profile}
                 status={props.status}
                 updateStatusTC={props.updateStatusTC}
+                saveProfileTC={props.saveProfileTC}
             />
 
-            {props.isOwner && <MyPostsContainer />}
+            {props.isOwner && props.profile && <MyPostsContainer />}
 
         </div>
     );
