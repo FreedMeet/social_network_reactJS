@@ -1,6 +1,6 @@
-import React from 'react'
-import {HashRouter, Route, withRouter} from 'react-router-dom';
-import {connect, Provider} from 'react-redux';
+import React, {useEffect} from 'react'
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import {Provider, useDispatch, useSelector} from 'react-redux';
 import {initializeAppTC} from "./redux/appReducer";
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -9,62 +9,65 @@ import Navbar from './components/Navbar/Navbar';
 import './App.css';
 import Preloader from "./components/Common/Preloader/Preloader";
 import store from "./redux/redux-store";
-import {compose} from "redux";
 import {withSuspense} from "./hoc/withSuspense";
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const Dialogs = React.lazy(() => import('./components/Dialogs/Dialogs'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
 
-class App extends React.Component {
+const AppContainer = () => {
 
-    componentDidMount() {
-        this.props.initializeAppTC()
-    };
+    const initialized = useSelector(state => state.app.initialized)
+    const dispatch = useDispatch()
 
-    render() {
+    useEffect( () => {
+        dispatch(initializeAppTC())
+    }, [dispatch, initialized])
 
-        if (!this.props.initialized) {
-            return <Preloader/>;
-        }
+    if (!initialized) {
+        return <Preloader/>;
+    }
+    return (
+        <div className='app-wrapper'>
 
-        return (
-            <div className='app-wrapper'>
+            <HeaderContainer />
+            <Navbar/>
 
-                <HeaderContainer/>
-                <Navbar/>
+            <div className='content'>
+                <Switch>
 
-                <div className='content'>
+                    <Route exact path="/">
+                        <Redirect to="/profile"/>
+                    </Route>
+
                     <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
-                    <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
+                    <Route path='/dialogs' render={withSuspense(Dialogs)}/>
                     <Route path='/users' render={() => <UsersContainer/>}/>
                     <Route path='/login' render={() => <Login/>}/>
-                </div>
-
+                    <Route path='*'
+                           render={() => <div style={{textAlign: 'center', fontSize: '30px'}}>
+                               Not Found 404
+                           </div>}
+                    />
+                </Switch>
             </div>
-        )
-    };
+
+        </div>
+    )
 }
-
-const mapStateToProps = (state) => ({
-    initialized: state.app.initialized
-});
-
-const AppContainer = compose(
-    withRouter,
-    connect(mapStateToProps, {initializeAppTC})
-)(App);
 
 const MainApp = () => {
     return (
         <React.StrictMode>
-            <HashRouter>
+            <BrowserRouter>
                 <Provider store={store}>
-                    <AppContainer/>
+                    <AppContainer />
                 </Provider>
-            </HashRouter>
+            </BrowserRouter>
         </React.StrictMode>
     )
 };
 
 export default MainApp;
+
+

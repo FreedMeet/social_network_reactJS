@@ -1,10 +1,10 @@
 import classes from './Post.module.css'
 
-const Post = (props) => {
+const Post = ({message, publishedTime}) => {
     return (
             <div className={classes.post}>
-                <p>{props.message}</p>
-                <span>{props.publishedTime}</span>
+                <p>{message}</p>
+                <span>{publishedTime}</span>
             </div>
     );
 }

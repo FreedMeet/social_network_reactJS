@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from './Header'
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import { logoutUserTC } from '../../redux/authReducer';
 
 class HeaderContainer extends React.Component{
@@ -9,7 +9,7 @@ class HeaderContainer extends React.Component{
             <Header {...this.props} />
         );
     };
-};
+}
 
 const mapStateToProps = (state) => {
     return {

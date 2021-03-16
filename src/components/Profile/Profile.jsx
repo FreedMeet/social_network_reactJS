@@ -1,21 +1,27 @@
-import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import classes from './Profile.module.css'
+import Preloader from "../Common/Preloader/Preloader";
+import MyPosts from "./MyPosts/MyPosts";
 
-const Profile = (props) => {
+const Profile = ({isOwner, profile, status, addPost, savePhoto, changeProfile, updateStatus}) => {
+
+    if (!profile) {
+        return <Preloader/>
+    }
 
     return (
         <div className={classes.profile}>
             <ProfileInfo
-                savePhotoTC={props.savePhotoTC}
-                isOwner={props.isOwner}
-                profile={props.profile}
-                status={props.status}
-                updateStatusTC={props.updateStatusTC}
-                saveProfileTC={props.saveProfileTC}
+                isOwner={isOwner}
+                profile={profile}
+                status={status}
+                addPost={addPost}
+                savePhoto={savePhoto}
+                changeProfile={changeProfile}
+                updateStatus={updateStatus}
             />
 
-            {props.isOwner && props.profile && <MyPostsContainer />}
+            {isOwner && profile && <MyPosts addPost={addPost} />}
 
         </div>
     );

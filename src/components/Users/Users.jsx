@@ -14,6 +14,7 @@ let Users = ({users, ...props}) => {
             />
             {
                 users.map(u => <User
+                        key={u.id}
                         user={u}
                         followingInProgress={props.followingInProgress}
                         unFollowTC={props.unFollowTC}

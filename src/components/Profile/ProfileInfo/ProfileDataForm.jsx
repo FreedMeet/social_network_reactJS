@@ -24,7 +24,7 @@ const ProfileDataForm = ({handleSubmit, profile, error}) => {
                 </div>
             </div>
             <div style={{display: 'flex', flexDirection: 'row'}}>
-                <Button width={'160px'} height={'31px'} type='submit'>Save Change</Button>
+                <Button width={'160px'} height={'31px'}>Save Change</Button>
             </div>
         </form>
     )

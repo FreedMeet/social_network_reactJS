@@ -2,20 +2,19 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form';
 import classes from './MyPosts.module.css'
 import Post from './Post/Post'
-import { required, maxLengthCreator } from '../../../utils/validators'
+import { required } from '../../../utils/validators'
 import {Textarea} from '../../Common/formControls/formControls';
 import Button from "../../Common/button/Button";
+import {useSelector} from "react-redux";
 
-const maxLength10 = maxLengthCreator(10);
-
-const MyPostForm = (props) => {
+const MyPostForm = ({handleSubmit}) => {
     return (
-        <form className={classes.form} onSubmit={props.handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
             <Field
                 placeholder="What happens?"
                 name={'newPostText'}
                 component={Textarea}
-                validate={[required, maxLength10]} />
+                validate={[required]} />
             <Button width={'20%'} height={'40px'} type='submit'>Add post</Button>
         </form>
     )
@@ -23,32 +22,25 @@ const MyPostForm = (props) => {
 
 const MyPostsReduxForm = reduxForm({ form: 'myPosts' })(MyPostForm);
 
-class MyPosts extends React.Component {
+const MyPosts = React.memo(({addPost}) => {
+    const PostsData = useSelector(state => state.profilePage.PostsData);
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps !== this.props || nextState !== this.state;
-    }
+    let PostsElements = PostsData.map(
+        post => <Post message={post.message} publishedTime={post.publishedTime} key={post.id}/>
+    );
 
-    render() {
+    const onSubmit = (formData) => {
+        addPost(formData.newPostText);
+    };
 
-        let PostsElements = this.props.PostsData.map(
-            post => <Post message={post.message} publishedTime={post.publishedTime} key={post.id}/>
-        );
-
-        const onSubmit = (formData) => {
-            this.props.addPostAC(formData.newPostText);
-        };
-
-        return (
-            <div className={classes.posts}>
-
-                <div className={classes.formPost}>
-                    <MyPostsReduxForm onSubmit={onSubmit}/>
-                </div>
-                {PostsElements}
+    return (
+        <div className={classes.posts}>
+            <div className={classes.formPost}>
+                <MyPostsReduxForm onSubmit={onSubmit}/>
             </div>
-        );
-    }
-}
+            {PostsElements}
+        </div>
+    );
+});
 
 export default MyPosts

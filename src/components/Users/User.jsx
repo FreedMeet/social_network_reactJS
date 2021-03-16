@@ -2,7 +2,7 @@ import classes from './Users.module.css'
 import userPhoto from '../../assets/images/users.png'
 import {NavLink} from 'react-router-dom';
 import Button from "../Common/button/Button";
-
+//TODO fixed follow/unfollow button
 let Users = ({user, followingInProgress, unFollowTC, followTC}) => {
     return (
         <div key={user.id} className={classes.profileCard}>

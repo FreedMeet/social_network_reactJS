@@ -1,57 +1,71 @@
-import React from 'react';
+import React, {useEffect, useCallback} from 'react';
 import Profile from './Profile';
-import {connect} from 'react-redux';
-import {getProfileTC, getStatusTC, savePhotoTC, saveProfileTC, updateStatusTC} from '../../redux/profileReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    addPostAC,
+    getProfileTC,
+    getStatusTC,
+    savePhotoTC,
+    saveProfileTC,
+    updateStatusTC
+} from '../../redux/profileReducer';
 import {withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect'
 
-class ProfileContainer extends React.Component {
+const ProfileContainer = ({match: {params: {userId}}, props}) => {
 
-    refreshProfile() {
-        let userId = this.props.match.params.userId;
+    const [profile, status, myUserId] = useSelector(
+        state => [
+            state.profilePage.profile,
+            state.profilePage.status,
+            state.auth.userId
+        ]
+    );
+    const dispatch = useDispatch();
 
-        if (!userId) {
-            userId = this.props.myUserId;
+    const refreshProfile = useCallback(() => {
+        let currentUserId = userId;
+
+        if (!currentUserId) {
+            currentUserId = myUserId;
         }
+        dispatch(getProfileTC(currentUserId));
+        dispatch(getStatusTC(currentUserId));
+    }, [userId, dispatch]);
 
-        this.props.getProfileTC(userId);
-        this.props.getStatusTC(userId);
-    }
+    useEffect(() => {
+        refreshProfile()
+    }, [userId, refreshProfile]);
 
-    componentDidMount() {
-        this.refreshProfile();
-    };
+    const addPost = useCallback((newPostText) => {
+        dispatch(addPostAC(newPostText));
+    }, [dispatch]);
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.match.params.userId !== prevProps.match.params.userId) {
-            this.refreshProfile();
-        }
-    };
+    const savePhoto = useCallback((file) => {
+        dispatch(savePhotoTC(file));
+    }, [dispatch]);
 
-    render() {
-        return (
-            <Profile
-                {...this.props}
-                isOwner={!this.props.match.params.userId}
-                profile={this.props.profile}
-                status={this.props.status}
-                updateStatusTC={this.props.updateStatusTC}
-                savePhoto={this.props.savePhotoTC}
-                saveProfileTC={this.props.saveProfileTC}
-            />
-        );
-    };
-}
+    const changeProfile = useCallback((formData) => {
+        dispatch(saveProfileTC(formData));
+    }, [dispatch]);
 
-let mapStateToProps = (state) => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    myUserId: state.auth.userId
-});
+    const updateStatus = useCallback((statusValue) => {
+        dispatch(updateStatusTC(statusValue));
+    }, [dispatch]);
 
-export default compose(
-    connect(mapStateToProps, {getProfileTC, getStatusTC, updateStatusTC, savePhotoTC, saveProfileTC}),
-    withRouter,
-    withAuthRedirect
-)(ProfileContainer);
+
+    return (
+        <Profile
+            isOwner={!userId}
+            profile={profile}
+            status={status}
+            addPost={addPost}
+            savePhoto={savePhoto}
+            changeProfile={changeProfile}
+            updateStatus={updateStatus}
+        />
+    );
+};
+
+export default compose(withRouter, withAuthRedirect)(ProfileContainer);

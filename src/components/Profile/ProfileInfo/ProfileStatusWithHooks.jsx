@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from 'react'
+import {useDispatch} from "react-redux";
+import {updateStatusTC} from "../../../redux/profileReducer";
 
-const ProfileStatusWithHooks = (props) => {
+const ProfileStatusWithHooks = ({status, updateStatus}) => {
 
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
+    let [statusValue, setStatus] = useState(status);
+    const dispatch = useDispatch();
 
     useEffect( () => {
-        setStatus(props.status)
-    }, [props.status])
+        setStatus(status)
+    }, [status])
 
     let activateEditMode = () => {
         setEditMode(true);
@@ -15,7 +18,7 @@ const ProfileStatusWithHooks = (props) => {
 
     let deactivateEditMode = () => {
         setEditMode(false);
-        props.updateStatusTC(status);
+        updateStatus(statusValue);
     };
 
     let onStatusChange = (e) => {
@@ -25,8 +28,8 @@ const ProfileStatusWithHooks = (props) => {
     return (
         <div>
             { editMode
-                ? <input onChange={onStatusChange} onBlur={deactivateEditMode} autoFocus={true} value={status}/>
-                : <span onDoubleClick={activateEditMode}>{props.status || '======'}</span>
+                ? <input onChange={onStatusChange} onBlur={deactivateEditMode} autoFocus={true} value={statusValue}/>
+                : <span onDoubleClick={activateEditMode}>{status || '======'}</span>
             }
         </div>
     );

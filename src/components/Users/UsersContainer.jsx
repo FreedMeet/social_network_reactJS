@@ -1,60 +1,54 @@
-import { connect } from "react-redux";
-import React from 'react'
+import { useDispatch, useSelector} from "react-redux";
+import React, {useCallback, useEffect} from 'react'
 import Users from './Users';
-import { followTC, getUsersTC, setCurrentPage, toggleIsFollowingProgress, unFollowTC } from "../../redux/usersReducer";
+import {followTC, getUsersTC, unFollowTC} from "../../redux/usersReducer";
 import Preloader from "../Common/Preloader/Preloader";
-import {
-    getCurrentPage,
-    getFollowingInProgress,
-    getIsFetching,
-    getPageSize, getToggleIsFollowingProgress,
-    getTotalUsersCount,
-    getUsers
-} from "../../redux/usersSelectors";
 
-class UsersAPIContainer extends React.Component {
+const UsersContainer = () => {
 
-    componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    const [users, pageSize, totalUsersCount, currentPage, isFetching, followingInProgress] =
+        useSelector(state =>
+            [
+                state.usersPage.users,
+                state.usersPage.pageSize,
+                state.usersPage.totalUsersCount,
+                state.usersPage.currentPage,
+                state.usersPage.isFetching,
+                state.usersPage.followingInProgress
+            ]);
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getUsersTC(currentPage, pageSize));
+    }, [currentPage, pageSize, dispatch]);
+
+    const onPageChanged = (pageNumber) => {
+        dispatch(getUsersTC(pageNumber, pageSize))
     };
 
-    onPageChanged = (pageNumber) => {
-        this.props.getUsers(pageNumber, this.props.pageSize);
-    }
+    const follow = useCallback((userId) => {
+        dispatch(followTC(userId))
+    }, [dispatch]);
 
-    render() {
-        return <>
-            {this.props.isFetching ? <Preloader /> :
-                <Users
-                    totalUsersCount={this.props.totalUsersCount}
-                    pageSize={this.props.pageSize}
-                    currentPage={this.props.currentPage}
-                    onPageChanged={this.onPageChanged}
-                    users={this.props.users}
-                    followingInProgress={this.props.followingInProgress}
-                    followTC={this.props.followTC}
-                    unFollowTC={this.props.unFollowTC}
-                />}
-        </>
-    }
+    const unFollow = useCallback((userId) => {
+        dispatch(unFollowTC(userId))
+    }, [dispatch]);
+
+
+    return <>
+        {isFetching ? <Preloader/> :
+            <Users
+                totalUsersCount={totalUsersCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChanged={onPageChanged}
+                users={users}
+                followingInProgress={followingInProgress}
+                followTC={follow}
+                unFollowTC={unFollow}
+            />}
+    </>
 }
-
-let mapStateToProps = (state) => ({
-    users: getUsers(state),
-    pageSize: getPageSize(state),
-    totalUsersCount: getTotalUsersCount(state),
-    currentPage: getCurrentPage(state),
-    isFetching: getIsFetching(state),
-    followingInProgress: getFollowingInProgress(state),
-    toggleIsFollowingProgress: getToggleIsFollowingProgress(state)
-});
-
-const UsersContainer = connect(mapStateToProps, {
-    setCurrentPage,
-    toggleIsFollowingProgress,
-    getUsers: getUsersTC,
-    followTC,
-    unFollowTC
-})(UsersAPIContainer);
 
 export default UsersContainer;

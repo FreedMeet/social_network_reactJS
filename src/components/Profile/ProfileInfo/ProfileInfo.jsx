@@ -1,31 +1,29 @@
 import {useState} from 'react'
 import classes from './ProfileInfo.module.css'
-import Preloader from '../../Common/Preloader/Preloader'
 import userPhoto from '../../../assets/images/users.png'
 import ProfileStatusWithHooks from './ProfileStatusWithHooks'
 import Button from "../../Common/button/Button";
 import ProfileDataForm from "./ProfileDataForm";
 import ProfileData from "./ProfileData";
+import Preloader from "../../Common/Preloader/Preloader";
 
-const ProfileInfo = ({profile, savePhotoTC, updateStatusTC, status, isOwner, saveProfileTC}) => {
+const ProfileInfo = ({profile, status, isOwner, savePhoto, changeProfile, updateStatus}) => {
 
     let [editMode, setEditMode] = useState(false);
 
-    if (!profile) {
-        return <Preloader/>
-    }
-
     const onMainPhotoSelected = (e) => {
         if (e.target.files.length) {
-            savePhotoTC(e.target.files[0])
+            savePhoto(e.target.files[0]);
         }
     };
 
     const onSubmit = (formData) => {
-        saveProfileTC(formData).then(
-            setEditMode(false)
-        );
+        changeProfile(formData)
+        setEditMode(false)
+    };
 
+    if (!profile) {
+        return <Preloader/>
     }
 
     return (
@@ -38,7 +36,7 @@ const ProfileInfo = ({profile, savePhotoTC, updateStatusTC, status, isOwner, sav
                         {profile.fullName}
                     </div>
                     <div style={{marginTop: '-20px'}}>
-                        <ProfileStatusWithHooks status={status} updateStatusTC={updateStatusTC}/>
+                        <ProfileStatusWithHooks updateStatus={updateStatus} status={status}/>
                     </div>
                 </div>
             </div>
