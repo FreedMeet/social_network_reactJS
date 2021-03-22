@@ -1,31 +1,12 @@
 import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
-import {Field, reduxForm} from 'redux-form';
-import {Textarea} from '../Common/formControls/formControls';
-import {required} from '../../utils/validators'
-import Button from "../Common/button/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {sendMessageAC} from "../../redux/dialogsReducer";
+import {sendMessage} from "../../redux/dialogsReducer";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import DialogsForm from "./DialogsForm";
 
-const DialogsForm = (props) => {
-    return (
-        <form className={classes.form} onSubmit={props.handleSubmit}>
-            <Field
-                placeholder='You`r message...'
-                name={'newMessageText'}
-                component={Textarea}
-                validate={required}/>
-            <Button width={'10%'} height={'104px'}>send</Button>
-        </form>
-    );
-};
-
-
-const DialogsReduxForm = reduxForm({form: 'dialogs'})(DialogsForm);
-
-const Dialogs = (props) => {
+const Dialogs = () => {
 
     const [MessageData, DialogsData] = useSelector(
         state =>
@@ -37,7 +18,7 @@ const Dialogs = (props) => {
     const dispatch = useDispatch();
 
     const onSubmit = (formData) => {
-        dispatch(sendMessageAC(formData.newMessageText));
+        dispatch(sendMessage(formData.newMessageText));
     };
 
     return (
@@ -58,7 +39,7 @@ const Dialogs = (props) => {
                         )}
                     </div>
 
-                    <DialogsReduxForm onSubmit={onSubmit}/>
+                    <DialogsForm onSubmit={onSubmit}/>
 
                 </div>
 

@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import {useDispatch} from "react-redux";
-import {updateStatusTC} from "../../../redux/profileReducer";
 
 const ProfileStatusWithHooks = ({status, updateStatus}) => {
 
     let [editMode, setEditMode] = useState(false);
     let [statusValue, setStatus] = useState(status);
-    const dispatch = useDispatch();
 
     useEffect( () => {
         setStatus(status)

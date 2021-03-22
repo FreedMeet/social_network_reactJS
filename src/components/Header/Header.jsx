@@ -1,8 +1,21 @@
-import { NavLink } from 'react-router-dom'
-import classes from './Header.module.css'
+import React, {useCallback} from 'react'
+import {useDispatch, useSelector} from 'react-redux';
+import { logoutUserTC } from '../../redux/authReducer';
+import classes from "./Header.module.css";
 import Button from "../Common/button/Button";
+import {NavLink} from "react-router-dom";
 
-const Header = ({isAuth, login, logoutUserTC}) => {
+const Header = () => {
+
+    const [isAuth, login] = useSelector(state => [
+        state.auth.isAuth,
+        state.auth.login
+    ]);
+
+    const dispatch = useDispatch();
+    const logout = useCallback(() => {
+        dispatch(logoutUserTC());
+    }, [dispatch]);
 
     return (
         <header>
@@ -11,12 +24,12 @@ const Header = ({isAuth, login, logoutUserTC}) => {
             <div className={classes.loginBlock}>
                 {isAuth
                     ? <div>
-                        {login} | <Button width={'120px'} height={'40px'} onClick={logoutUserTC}>Logout</Button>
+                        {login} | <Button width={'120px'} height={'40px'} onClick={logout}>Logout</Button>
                     </div>
                     : <NavLink to='/login'>Login</NavLink>}
             </div>
         </header>
-    );
+    )
 }
 
 export default Header

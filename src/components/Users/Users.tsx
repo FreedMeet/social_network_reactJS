@@ -1,9 +1,21 @@
 import classes from './Users.module.css'
 import Pagination from "../Common/Pagination/Pagination";
 import User from "./User";
+import {UsersType} from "../../types/types";
+import {FC} from "react";
 
-let Users = ({users, ...props}) => {
+type PropsType = {
+    users: Array<UsersType>
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    followingInProgress: Array<number>
+    unFollowTC: (userId: number) => void
+    followTC: (userId: number) => void
+}
 
+let Users: FC<PropsType> = ({users, ...props}) => {
     return (
         <div className={classes.profileBlock}>
             <Pagination

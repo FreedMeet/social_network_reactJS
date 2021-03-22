@@ -8,7 +8,7 @@ import {reducer as formReducer} from 'redux-form'
 
 const { createStore, combineReducers, applyMiddleware } = require("redux");
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
     profilePage: profileReducer,
     messagePage: dialogsReducer,
     usersPage: usersReducer,
@@ -17,8 +17,10 @@ let reducers = combineReducers({
     app: appReducer
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+type rootReducerType = typeof rootReducer;
+export type appStateType = ReturnType<rootReducerType>
 
-window.store = store
+let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+
 
 export default store

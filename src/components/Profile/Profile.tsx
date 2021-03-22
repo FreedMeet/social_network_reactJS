@@ -2,9 +2,20 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 import classes from './Profile.module.css'
 import Preloader from "../Common/Preloader/Preloader";
 import MyPosts from "./MyPosts/MyPosts";
+import {FC} from "react";
+import {ProfileInfoType} from "../../types/types";
 
-const Profile = ({isOwner, profile, status, addPost, savePhoto, changeProfile, updateStatus}) => {
+type PropsType = ProfileInfoType & {addNewPost: (newPostText: string) => void}
 
+const Profile: FC<PropsType> = ({
+                                    isOwner,
+                                    profile,
+                                    status,
+                                    addNewPost,
+                                    savePhoto,
+                                    changeProfile,
+                                    updateStatus
+}) => {
     if (!profile) {
         return <Preloader/>
     }
@@ -15,13 +26,12 @@ const Profile = ({isOwner, profile, status, addPost, savePhoto, changeProfile, u
                 isOwner={isOwner}
                 profile={profile}
                 status={status}
-                addPost={addPost}
                 savePhoto={savePhoto}
                 changeProfile={changeProfile}
                 updateStatus={updateStatus}
             />
 
-            {isOwner && profile && <MyPosts addPost={addPost} />}
+            {isOwner && profile && <MyPosts addNewPost={addNewPost} />}
 
         </div>
     );

@@ -2,8 +2,18 @@ import classes from './Users.module.css'
 import userPhoto from '../../assets/images/users.png'
 import {NavLink} from 'react-router-dom';
 import Button from "../Common/button/Button";
+import React, {FC} from 'react'
+import {UsersType} from "../../types/types";
 //TODO fixed follow/unfollow button
-let Users = ({user, followingInProgress, unFollowTC, followTC}) => {
+
+type PropsType = {
+    user: UsersType
+    followingInProgress: Array<number>
+    unFollowTC: (userId: number) => void
+    followTC: (userId: number) => void
+}
+
+const User: FC<PropsType> = React.memo(({user, followingInProgress, unFollowTC, followTC}) => {
     return (
         <div key={user.id} className={classes.profileCard}>
             <div className={classes.profilePhoto}>
@@ -25,7 +35,8 @@ let Users = ({user, followingInProgress, unFollowTC, followTC}) => {
                         disabled={followingInProgress.some(id => id === user.id)}
                         onClick={() => {
                             followTC(user.id)
-                        }}>follow</Button>}
+                        }}>follow</Button>
+                }
             </div>
             <div className={classes.profileInfo}>
                 <div className={classes.profileName}>
@@ -39,6 +50,5 @@ let Users = ({user, followingInProgress, unFollowTC, followTC}) => {
             </div>
 
         </div>)
-};
-
-export default Users
+});
+export default User

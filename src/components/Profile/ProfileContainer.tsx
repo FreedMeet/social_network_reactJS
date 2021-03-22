@@ -1,8 +1,8 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback, FC} from 'react';
 import Profile from './Profile';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    addPostAC,
+    addPost,
     getProfileTC,
     getStatusTC,
     savePhotoTC,
@@ -12,11 +12,24 @@ import {
 import {withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect'
+import {appStateType} from "../../redux/redux-store";
+import {ProfileType} from "../../types/types";
 
-const ProfileContainer = ({match: {params: {userId}}, props}) => {
+type MatchType = {
+    params: {userId: number}
+    isExact: boolean
+    path: string
+    url: string
+};
+
+type PropsType = {
+    match: MatchType
+};
+
+const ProfileContainer: FC<PropsType> = ({match: {params: {userId}}}) => {
 
     const [profile, status, myUserId] = useSelector(
-        state => [
+        (state: appStateType) => [
             state.profilePage.profile,
             state.profilePage.status,
             state.auth.userId
@@ -32,25 +45,25 @@ const ProfileContainer = ({match: {params: {userId}}, props}) => {
         }
         dispatch(getProfileTC(currentUserId));
         dispatch(getStatusTC(currentUserId));
-    }, [userId, dispatch]);
+    }, [userId, dispatch, myUserId]);
 
     useEffect(() => {
         refreshProfile()
     }, [userId, refreshProfile]);
 
-    const addPost = useCallback((newPostText) => {
-        dispatch(addPostAC(newPostText));
+    const addNewPost = useCallback((newPostText: string) => {
+        dispatch(addPost(newPostText));
     }, [dispatch]);
 
-    const savePhoto = useCallback((file) => {
+    const savePhoto = useCallback((file: any) => {
         dispatch(savePhotoTC(file));
     }, [dispatch]);
 
-    const changeProfile = useCallback((formData) => {
+    const changeProfile = useCallback((formData: ProfileType) => {
         dispatch(saveProfileTC(formData));
     }, [dispatch]);
 
-    const updateStatus = useCallback((statusValue) => {
+    const updateStatus = useCallback((statusValue: string) => {
         dispatch(updateStatusTC(statusValue));
     }, [dispatch]);
 
@@ -60,7 +73,7 @@ const ProfileContainer = ({match: {params: {userId}}, props}) => {
             isOwner={!userId}
             profile={profile}
             status={status}
-            addPost={addPost}
+            addNewPost={addNewPost}
             savePhoto={savePhoto}
             changeProfile={changeProfile}
             updateStatus={updateStatus}

@@ -1,4 +1,4 @@
-button{
+.btn{
     background-color: transparent;
     border: 1px solid black;
     border-radius: 15px;
@@ -9,6 +9,16 @@ button{
     text-transform: uppercase;
 }
 
-button:hover{
+.btn:hover{
     background-color: #fff;
+}
+
+.active{
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 15px;
+
+    cursor: pointer;
+    text-transform: uppercase;
 }

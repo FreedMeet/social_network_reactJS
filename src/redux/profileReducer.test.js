@@ -1,4 +1,4 @@
-import profileReducer, {addPostAC, deletePostAC} from "./profileReducer";
+import profileReducer, {addPost, deletePost} from "./profileReducer";
 
 let state = {
     PostsData: [
@@ -13,28 +13,28 @@ let state = {
 let testPost = 'New post'
 
 test('Length of state should be increment', () => {
-    let action = addPostAC(testPost)
+    let action = addPost(testPost)
     let newState = profileReducer(state, action)
 
     expect(newState.PostsData.length).toBe(state.PostsData.length + 1)
 });
 
 test('Text of new post should be correct', () => {
-    let action = addPostAC(testPost)
+    let action = addPost(testPost)
     let newState = profileReducer(state, action)
 
     expect(newState.PostsData[newState.PostsData.length - 1].message).toBe(testPost)
 });
 
 test('After delete posts count should be decrement', () => {
-    let action = deletePostAC(2)
+    let action = deletePost(2)
     let newState = profileReducer(state, action)
 
     expect(newState.PostsData.length).toBe(state.PostsData.length - 1)
 });
 
 test('After delete posts count should`t be decrement if Id incorrect', () => {
-    let action = deletePostAC(1000)
+    let action = deletePost(1000)
     let newState = profileReducer(state, action)
 
     expect(newState.PostsData.length).toBe(state.PostsData.length)

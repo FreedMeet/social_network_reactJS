@@ -1,8 +1,6 @@
-import classes from "./ProfileInfo.module.css";
-
 const ProfileData = ({profile}) =>{
     return (
-        <div className={classes.contacts}>
+        <div>
             <p>Looking for a job: <b style={{textTransform: 'uppercase'}}>{profile.lookingForAJob ? 'Yes' : 'No'}</b>
             </p>
             {profile.lookingForAJob && <p>Professional skills: <b>{profile.lookingForAJobDescription}</b></p>}

@@ -3,7 +3,7 @@ import {Field, reduxForm} from "redux-form";
 import {Input, Textarea} from "../../Common/formControls/formControls";
 import Button from "../../Common/button/Button";
 
-const ProfileDataForm = ({handleSubmit, profile, error}) => {
+const ProfileDataForm = ({handleSubmit, profile}) => {
     return (
         <form onSubmit={handleSubmit} >
             <div className={classes.profileFormFields}>

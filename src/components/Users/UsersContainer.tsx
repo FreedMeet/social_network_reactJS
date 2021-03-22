@@ -1,13 +1,14 @@
 import { useDispatch, useSelector} from "react-redux";
-import React, {useCallback, useEffect} from 'react'
+import {useCallback, useEffect} from 'react'
 import Users from './Users';
 import {followTC, getUsersTC, unFollowTC} from "../../redux/usersReducer";
 import Preloader from "../Common/Preloader/Preloader";
+import {appStateType} from "../../redux/redux-store";
 
 const UsersContainer = () => {
 
     const [users, pageSize, totalUsersCount, currentPage, isFetching, followingInProgress] =
-        useSelector(state =>
+        useSelector((state: appStateType) =>
             [
                 state.usersPage.users,
                 state.usersPage.pageSize,
@@ -23,15 +24,15 @@ const UsersContainer = () => {
         dispatch(getUsersTC(currentPage, pageSize));
     }, [currentPage, pageSize, dispatch]);
 
-    const onPageChanged = (pageNumber) => {
+    const onPageChanged = (pageNumber: number) => {
         dispatch(getUsersTC(pageNumber, pageSize))
     };
 
-    const follow = useCallback((userId) => {
+    const follow = useCallback((userId: number) => {
         dispatch(followTC(userId))
     }, [dispatch]);
 
-    const unFollow = useCallback((userId) => {
+    const unFollow = useCallback((userId: number) => {
         dispatch(unFollowTC(userId))
     }, [dispatch]);
 
