@@ -4,10 +4,11 @@ import { logoutUserTC } from '../../redux/authReducer';
 import classes from "./Header.module.css";
 import Button from "../Common/button/Button";
 import {NavLink} from "react-router-dom";
+import {appStateType} from "../../redux/redux-store";
 
 const Header = () => {
 
-    const [isAuth, login] = useSelector(state => [
+    const [isAuth, login] = useSelector((state: appStateType) => [
         state.auth.isAuth,
         state.auth.login
     ]);

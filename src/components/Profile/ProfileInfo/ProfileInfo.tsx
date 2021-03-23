@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {ChangeEvent, FC, useState} from 'react'
 import classes from './ProfileInfo.module.css'
 import userPhoto from '../../../assets/images/users.png'
 import ProfileStatusWithHooks from './ProfileStatusWithHooks'
@@ -6,18 +6,20 @@ import Button from "../../Common/button/Button";
 import ProfileDataForm from "./ProfileDataForm";
 import ProfileData from "./ProfileData";
 import Preloader from "../../Common/Preloader/Preloader";
+import {ProfilePageInfoType, ProfileType} from "../../../types/types";
 
-const ProfileInfo = ({profile, status, isOwner, savePhoto, changeProfile, updateStatus}) => {
+const ProfileInfo: FC<ProfilePageInfoType> = ({profile, status, isOwner,
+                                              savePhoto, changeProfile, updateStatus}) => {
 
     let [editMode, setEditMode] = useState(false);
 
-    const onMainPhotoSelected = (e) => {
-        if (e.target.files.length) {
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
             savePhoto(e.target.files[0]);
         }
     };
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: ProfileType) => {
         changeProfile(formData)
         setEditMode(false)
     };

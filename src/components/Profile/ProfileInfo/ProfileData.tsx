@@ -1,4 +1,15 @@
-const ProfileData = ({profile}) =>{
+import {ContactsType, ProfileType} from "../../../types/types";
+import React, {FC} from "react";
+
+type ProfilePropsType = {
+    profile: ProfileType
+};
+type ContactsPropsType = {
+    contactTitle: string
+    contactValue: string
+}
+
+const ProfileData: FC<ProfilePropsType> = ({profile}) =>{
     return (
         <div>
             <p>Looking for a job: <b style={{textTransform: 'uppercase'}}>{profile.lookingForAJob ? 'Yes' : 'No'}</b>
@@ -7,10 +18,12 @@ const ProfileData = ({profile}) =>{
             <p>About me: <b>{profile.aboutMe}</b></p>
             <div style={{marginBottom:'-10px'}}>
                 <h3>Contacts</h3>
-                {Object.keys(profile.contacts).map(key => {
+                {Object
+                    .keys(profile.contacts)
+                    .map(key => {
                     return <Contacts key={key} contactTitle={key}
-                                     contactValue={profile.contacts[key]
-                                         ? profile.contacts[key]
+                                     contactValue={profile.contacts[key as keyof ContactsType]
+                                         ? profile.contacts[key as keyof ContactsType]
                                          : '==='}/>
                 })}
             </div>
@@ -18,7 +31,7 @@ const ProfileData = ({profile}) =>{
     )
 };
 
-const Contacts = ({contactTitle, contactValue}) =>{
+const Contacts: FC<ContactsPropsType> = ({contactTitle, contactValue}) =>{
     return <div>
         <p>{contactTitle}: <b>{contactValue}</b></p>
     </div>

@@ -4,17 +4,25 @@ import {useDispatch, useSelector} from 'react-redux';
 import { loginUserTC } from '../../redux/authReducer';
 import { Redirect } from 'react-router-dom';
 import LoginForm from "./LoginForm";
+import {appStateType} from "../../redux/redux-store";
+
+export type FormDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string | null
+}
 
 const Login = () => {
 
-    const [isAuth, captchaUrl] = useSelector(state => [
+    const [isAuth, captchaUrl] = useSelector((state: appStateType) => [
         state.auth.isAuth,
         state.auth.captchaUrl
     ])
 
     const dispatch = useDispatch();
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: FormDataType) => {
         dispatch(loginUserTC(formData.email, formData.password, formData.rememberMe, formData.captcha));
     };
 

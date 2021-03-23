@@ -1,12 +1,14 @@
 import classes from "./Dialogs.module.css";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../Common/formControls/formControls";
 import {required} from "../../utils/validators";
 import Button from "../Common/button/Button";
+import {FC} from "react";
+import {MessageType} from "../../redux/dialogsReducer";
 
-const DialogsForm = (props) => {
+const DialogsForm: FC<InjectedFormProps<MessageType>> = ({handleSubmit}) => {
     return (
-        <form className={classes.form} onSubmit={props.handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
             <Field
                 placeholder='You`r message...'
                 name={'newMessageText'}
@@ -18,4 +20,4 @@ const DialogsForm = (props) => {
 };
 
 
-export default reduxForm({form: 'dialogs'})(DialogsForm);
+export default reduxForm<MessageType>({form: 'dialogs'})(DialogsForm);

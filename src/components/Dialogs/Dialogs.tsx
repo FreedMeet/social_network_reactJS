@@ -1,15 +1,16 @@
 import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import {useDispatch, useSelector} from "react-redux";
-import {sendMessage} from "../../redux/dialogsReducer";
+import {DialogType, MessageType, sendMessage} from "../../redux/dialogsReducer";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import DialogsForm from "./DialogsForm";
+import {appStateType} from "../../redux/redux-store";
 
 const Dialogs = () => {
 
     const [MessageData, DialogsData] = useSelector(
-        state =>
+        (state: appStateType) =>
             [
                 state.messagePage.MessageData,
                 state.messagePage.DialogsData
@@ -17,7 +18,7 @@ const Dialogs = () => {
 
     const dispatch = useDispatch();
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: any) => {
         dispatch(sendMessage(formData.newMessageText));
     };
 
@@ -27,7 +28,8 @@ const Dialogs = () => {
 
                 <div className={classes.dialogsItem}>
                     {DialogsData.map(
-                        dialog => <DialogsItem name={dialog.name} id={dialog.id} key={dialog.id}/>
+                        (dialog: DialogType) =>
+                            <DialogsItem name={dialog.name} id={dialog.id} key={dialog.id}/>
                     )}
                 </div>
 
@@ -35,7 +37,8 @@ const Dialogs = () => {
 
                     <div className={classes.messagesItem}>
                         {MessageData.map(
-                            message => <div key={message.id} className={classes.message}>{message.message}</div>
+                            (message: MessageType) =>
+                                <div key={message.id} className={classes.message}>{message.message}</div>
                         )}
                     </div>
 

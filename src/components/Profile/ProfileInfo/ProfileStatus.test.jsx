@@ -1,7 +1,7 @@
 import React from "react";
 import {create} from "react-test-renderer";
 import ProfileStatus from "./ProfileStatus";
-
+//TODO: Recreate tests for ProfileStatus component with hooks
 describe("ProfileStatus component", () => {
     test("status from props should be in state", () => {
         const component = create(<ProfileStatus status="New status text"/>);

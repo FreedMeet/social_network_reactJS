@@ -66,7 +66,7 @@ export const getMyProfileTC = () => async (dispatch: any) => {
     }
 };
 
-export const loginUserTC = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
+export const loginUserTC = (email: string, password: string, rememberMe: boolean, captcha: string | null) => async (dispatch: any) => {
     let data = await authAPI.login(email, password, rememberMe, captcha);
 
     if (data.resultCode === 0) {

@@ -18,6 +18,7 @@ export type ProfileType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
+    aboutMe: string
     contacts: ContactsType
     photos: PhotosType
 };
@@ -28,11 +29,11 @@ export type UsersType = {
     photos: PhotosType
     followed: boolean
 };
-export type ProfileInfoType = {
+export type ProfilePageInfoType = {
     isOwner: boolean
     profile: ProfileType
     status: string
-    savePhoto: (file: any) => void
+    savePhoto: (file: File) => void
     changeProfile: (formData: ProfileType) => void
     updateStatus: (statusValue: string) => void
 };
