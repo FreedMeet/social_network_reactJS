@@ -1,32 +1,42 @@
 import classes from "./ProfileInfo.module.css";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input, Textarea} from "../../Common/formControls/formControls";
+import {InjectedFormProps, reduxForm} from "redux-form";
+import {createField, Input, Textarea} from "../../Common/formControls/formControls";
 import Button from "../../Common/button/Button";
-import {ProfileType} from "../../../types/types";
+import {ContactsType, ProfileType} from "../../../types/types";
 import {FC} from "react";
 
 type PropsType = {
     profile: ProfileType
 }
 
+type ProfileDataTypes = {
+    fullName: string
+    lookingForAJobDescription: string
+    aboutMe: string
+    lookingForAJob: boolean
+}
+
 const ProfileDataForm: FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = (
     {handleSubmit, profile}) => {
     return (
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit}>
             <div className={classes.profileFormFields}>
-                <Field component={Input} name={'fullName'} placeholder='full name' validate={[]}/>
-                <Field component={Textarea} name={'lookingForAJobDescription'} placeholder='professional skills'
-                       validate={[]}/>
-                <Field component={Textarea} name={'aboutMe'} placeholder='about me' validate={[]}/>
-                <div style={{display: 'flex', alignSelf:'flex-start', marginTop:'10px'}}>
-                    <span style={{opacity: '.7', width:'300px'}}>Looking for a job:</span>
-                    <Field component={Input} type={'checkbox'} name={'lookingForAJob'} validate={[]}/>
+                {createField<DataFormValuesTypeKeys>('full name', "fullName",
+                    [], Input)}
+                {createField<DataFormValuesTypeKeys>('professional skills', "lookingForAJobDescription",
+                    [], Textarea)}
+                {createField<DataFormValuesTypeKeys>('about me', "aboutMe",
+                    [], Textarea)}
+                <div style={{display: 'flex', alignSelf: 'flex-start', marginTop: '10px'}}>
+                    <span style={{opacity: '.7', width: '300px'}}>Looking for a job:</span>
+                    {createField<DataFormValuesTypeKeys>(undefined, "lookingForAJob",
+                        [], Input, {type: 'checkbox'})}
                 </div>
-                <div style={{alignSelf:'flex-start'}}>
+                <div style={{alignSelf: 'flex-start'}}>
                     <h3>Contacts</h3>
                     {Object.keys(profile.contacts).map(key => {
-                        return <Field key={key} style={{marginBottom: '5px'}} component={Input} name={'contacts.' + key}
-                                      placeholder={key} validate={[]}/>
+                        return createField(key, 'contacts.' + key,
+                            [], Input, {key: key, style: {marginBottom: '5px'}})
                     })}
                 </div>
             </div>
@@ -36,6 +46,8 @@ const ProfileDataForm: FC<InjectedFormProps<ProfileType, PropsType> & PropsType>
         </form>
     )
 }
+
+type DataFormValuesTypeKeys = Extract<keyof ProfileDataTypes, string>
 
 const ProfileDataReduxForm = reduxForm<ProfileType, PropsType>({form: 'profileData'})(ProfileDataForm);
 

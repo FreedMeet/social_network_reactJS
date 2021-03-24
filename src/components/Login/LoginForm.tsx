@@ -1,10 +1,9 @@
 import {maxLengthCreator, required} from "../../utils/validators";
 import classes from "./Login.module.css";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../Common/formControls/formControls";
+import {InjectedFormProps, reduxForm} from "redux-form";
+import {createField, Input} from "../Common/formControls/formControls";
 import Button from "../Common/button/Button";
 import React, {FC} from "react";
-import {ProfileType} from "../../types/types";
 import {FormDataType} from "./Login";
 
 type PropsType = {
@@ -17,35 +16,22 @@ const LoginForm: FC<InjectedFormProps<FormDataType, PropsType> & PropsType> = (
     {handleSubmit, error, captchaUrl}) => {
     return (
         <form onSubmit={handleSubmit} className={classes.loginForm}>
-            <Field
-                component={Input}
-                name={'email'}
-                placeholder='email'
-                validate={[required, maxLength45]}
-            />
-            <Field
-                component={Input}
-                name={'password'}
-                placeholder='Password'
-                type='password'
-                validate={[required, maxLength45]}
-            />
-            Remember me <Field
-            component={Input}
-            name={'rememberMe'}
-            type='checkbox'
-        />
+            {createField<LoginFormValueTypeKeys>('email', 'email',
+                [required, maxLength45], Input)}
+            {createField<LoginFormValueTypeKeys>('Password', 'password',
+                [required, maxLength45],
+                Input, {type: 'password'})}
+            {createField<LoginFormValueTypeKeys>(undefined, 'rememberMe',
+                [], Input, {type: 'checkbox'}, 'Remember me')}
             {captchaUrl && <img src={captchaUrl} alt="captcha"/>}
-            {captchaUrl && <Field
-                component={Input}
-                name={'captcha'}
-                placeholder='captcha'
-                validate={[required]}
-            />}
+            {captchaUrl && createField<LoginFormValueTypeKeys>('captcha', 'captcha',
+                [required], Input)}
             <Button width={'300px'} height={'40px'}>login</Button>
-            <div style={{marginTop: 10, color: 'red', fontSize: 20}}>{ error }</div>
+            <div style={{marginTop: 10, color: 'red', fontSize: 20}}>{error}</div>
         </form>
     );
 };
 
-export default reduxForm<FormDataType, PropsType>({ form: 'login' })(LoginForm);
+type LoginFormValueTypeKeys = Extract<keyof FormDataType, string>
+
+export default reduxForm<FormDataType, PropsType>({form: 'login'})(LoginForm);
