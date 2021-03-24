@@ -34,6 +34,7 @@
     display: flex;
     width: 100%;
 }
+
 .form textarea{
     resize: none;
     border: 2px solid black;

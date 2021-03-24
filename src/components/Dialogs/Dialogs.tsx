@@ -1,14 +1,13 @@
 import classes from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import {useDispatch, useSelector} from "react-redux";
-import {DialogType, MessageType, sendMessage} from "../../redux/dialogsReducer";
+import {actions, DialogType, MessageType} from "../../redux/dialogsReducer";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import DialogsForm from "./DialogsForm";
 import {appStateType} from "../../redux/redux-store";
 
 const Dialogs = () => {
-
     const [MessageData, DialogsData] = useSelector(
         (state: appStateType) =>
             [
@@ -19,7 +18,7 @@ const Dialogs = () => {
     const dispatch = useDispatch();
 
     const onSubmit = (formData: any) => {
-        dispatch(sendMessage(formData.newMessageText));
+        dispatch(actions.sendMessage(formData.newMessageText));
     };
 
     return (

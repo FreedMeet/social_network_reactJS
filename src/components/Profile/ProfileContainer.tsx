@@ -2,7 +2,7 @@ import React, {useEffect, useCallback, FC} from 'react';
 import Profile from './Profile';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    addPost,
+    actions,
     getProfileTC,
     getStatusTC,
     savePhotoTC,
@@ -52,7 +52,7 @@ const ProfileContainer: FC<PropsType> = ({match: {params: {userId}}}) => {
     }, [userId, refreshProfile]);
 
     const addNewPost = useCallback((newPostText: string) => {
-        dispatch(addPost(newPostText));
+        dispatch(actions.addPost(newPostText));
     }, [dispatch]);
 
     const savePhoto = useCallback((file: any) => {
@@ -81,4 +81,4 @@ const ProfileContainer: FC<PropsType> = ({match: {params: {userId}}}) => {
     );
 };
 
-export default compose(withRouter, withAuthRedirect)(ProfileContainer);
+export default compose<React.ComponentType>(withRouter, withAuthRedirect)(ProfileContainer);

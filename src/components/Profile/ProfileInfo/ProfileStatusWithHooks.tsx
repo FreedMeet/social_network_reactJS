@@ -2,7 +2,7 @@ import React, {useState, useEffect, FC, ChangeEvent} from 'react'
 
 type PropsType = {
     status: string
-    updateStatus: (statusValue: string) => void
+    updateStatus?: (statusValue: string) => void
 }
 
 const ProfileStatusWithHooks: FC<PropsType> = ({status, updateStatus}) => {
@@ -20,7 +20,9 @@ const ProfileStatusWithHooks: FC<PropsType> = ({status, updateStatus}) => {
 
     let deactivateEditMode = () => {
         setEditMode(false);
-        updateStatus(statusValue);
+        if (updateStatus) {
+            updateStatus(statusValue);
+        }
     };
 
     let onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {

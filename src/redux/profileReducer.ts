@@ -1,20 +1,7 @@
-import {profileAPI} from "../api/api";
-import {PhotosType, ProfileType} from "../types/types";
-import {ThunkAction} from "redux-thunk";
-import {appStateType} from "./redux-store";
-import {ResultCode} from "../types/apiType";
-
-const ADD_POST = 'profile/ADD_POST';
-const DELETE_POST = 'profile/DELETE_POST';
-const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
-const SET_STATUS = 'profile/SET_STATUS';
-const SET_PHOTO_SUCCESS = 'profile/SET_PHOTO_SUCCESS';
-
-export type PostType = {
-    id: number
-    message: string
-    publishedTime: string
-};
+import {PhotosType, ProfileType} from "../types/types"
+import {CommonThunkType, InferValueTypes} from "./redux-store"
+import {ResultCode} from "../types/apiType"
+import {profileAPI} from "../api/profileApi";
 
 let initialState = {
     PostsData: [
@@ -23,109 +10,89 @@ let initialState = {
     ] as Array<PostType>,
     profile: null as ProfileType | null,
     status: ''
-};
+}
 
-export type initialStateType = typeof initialState;
+type PostType = {id: number, message: string, publishedTime: string}
+type initialStateType = typeof initialState
+type ActionsType = InferValueTypes<typeof actions>
+type ThunkType = CommonThunkType<ActionsType>
 
 const profileReducer = (state = initialState, action: ActionsType): initialStateType => {
-
     switch (action.type) {
-        case ADD_POST:
+        case "profile/ADD_POST":
             return {
                 ...state,
                 PostsData: [...state.PostsData, {id: 3, message: action.newPostText, publishedTime: '13:00'}]
-            };
-        case DELETE_POST:
+            }
+        case "profile/DELETE_POST":
             return {
                 ...state,
                 PostsData: state.PostsData.filter(p => p.id !== action.postId)
-            };
-        case SET_USER_PROFILE:
+            }
+        case "profile/SET_USER_PROFILE":
             return {
                 ...state,
                 profile: action.profile
-            };
-        case SET_STATUS:
+            }
+        case "profile/SET_STATUS":
             return {
                 ...state,
                 status: action.status
-            };
-        case SET_PHOTO_SUCCESS:
+            }
+        case "profile/SET_PHOTO_SUCCESS":
             return {
                 ...state,
                 profile: {...state.profile, photos: action.photos} as ProfileType
-            };
+            }
         default:
-            return state;
+            return state
     }
-};
+}
 
-type ActionsType = addPostActionType | deletePostActionType | setUserProfileActionType |
-    setStatusActionType | savePhotoSuccessActionType
+export const actions = {
+    addPost: (newPostText: string) => ({type: 'profile/ADD_POST', newPostText} as const),
+    deletePost: (postId: number) => ({type: 'profile/DELETE_POST', postId} as const),
+    setUserProfile: (profile: ProfileType) => ({type: 'profile/SET_USER_PROFILE', profile} as const),
+    setStatus: (status: string) => ({type: 'profile/SET_STATUS', status} as const),
+    savePhotoSuccess: (photos: PhotosType) => ({type: 'profile/SET_PHOTO_SUCCESS', photos} as const)
+}
 
-type addPostActionType = {
-    type: typeof ADD_POST
-    newPostText: string
-};
-export const addPost = (newPostText: string): addPostActionType => ({type: ADD_POST, newPostText});
-
-type deletePostActionType = {
-    type: typeof DELETE_POST
-    postId: number
-};
-export const deletePost = (postId: number): deletePostActionType => ({type: DELETE_POST, postId});
-
-type setUserProfileActionType = {
-    type: typeof SET_USER_PROFILE
-    profile: ProfileType
-};
-export const setUserProfile = (profile: ProfileType): setUserProfileActionType => ({type: SET_USER_PROFILE, profile});
-
-type setStatusActionType = {
-    type: typeof SET_STATUS
-    status: string
-};
-export const setStatus = (status: string): setStatusActionType => ({type: SET_STATUS, status});
-
-type savePhotoSuccessActionType = {
-    type: typeof SET_PHOTO_SUCCESS
-    photos: PhotosType
-};
-export const savePhotoSuccess = (photos: PhotosType): savePhotoSuccessActionType => ({type: SET_PHOTO_SUCCESS, photos});
-
-type ThunkType = ThunkAction<Promise<void>, appStateType, unknown, ActionsType>
 
 export const getProfileTC = (userId: number): ThunkType => async (dispatch) => {
-    let data = await profileAPI.getProfile(userId);
-    dispatch(setUserProfile(data));
-};
+    let data = await profileAPI.getProfile(userId)
+    dispatch(actions.setUserProfile(data))
+}
 
 export const getStatusTC = (userId: number): ThunkType => async (dispatch) => {
-    let data = await profileAPI.getStatus(userId);
-    dispatch(setStatus(data));
-};
+    let data = await profileAPI.getStatus(userId)
+    dispatch(actions.setStatus(data))
+}
 
 export const updateStatusTC = (status: string): ThunkType => async (dispatch) => {
-    let data = await profileAPI.updateStatus(status);
+    let data = await profileAPI.updateStatus(status)
     if (data.resultCode === ResultCode.Success) {
-        dispatch(setStatus(status));
+        dispatch(actions.setStatus(status))
     }
-};
+}
 
 export const savePhotoTC = (file: File): ThunkType => async (dispatch) => {
-    let data = await profileAPI.savePhoto(file);
+    let data = await profileAPI.savePhoto(file)
     if (data.resultCode === ResultCode.Success) {
-        dispatch(savePhotoSuccess(data.data.photos));
+        dispatch(actions.savePhotoSuccess(data.data.photos))
     }
-};
+}
 
 export const saveProfileTC = (profile: ProfileType): ThunkType => async (dispatch
                                                                          , getState) => {
     const userId = getState().auth.userId
-    const data = await profileAPI.saveProfile(profile);
+    const data = await profileAPI.saveProfile(profile)
     if (data.resultCode === ResultCode.Success) {
-        dispatch(getProfileTC(userId));
+        if (userId != null) {
+            dispatch(getProfileTC(userId))
+        } else {
+            throw new Error('userId can`t be null')
+        }
     }
-};
+}
 
-export default profileReducer;
+export default profileReducer
