@@ -1,7 +1,8 @@
 import {FC, useState} from 'react'
 import classes from './Pagination.module.css'
 import Button from "../button/Button";
-//TODO Create active class to button
+import btnStyle from '../button/Button.module.css'
+
 type PropsType = {
     totalUsersCount: number
     pageSize: number
@@ -9,7 +10,7 @@ type PropsType = {
     currentPage: number
 }
 
-let Pagination: FC<PropsType> = ({totalUsersCount, pageSize, onPageChanged}) => {
+let Pagination: FC<PropsType> = ({totalUsersCount, currentPage, pageSize, onPageChanged}) => {
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize);
     let portionSize = 5
@@ -35,6 +36,7 @@ let Pagination: FC<PropsType> = ({totalUsersCount, pageSize, onPageChanged}) => 
                     pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                         .map(page => {
                             return <Button width={'30px'} height={'30px'}
+                                           className={currentPage === page ? `${btnStyle.active}` : `${btnStyle.btn}`}
                                            onClick={() => {
                                                onPageChanged(page);
                                            }}>{page}</Button>

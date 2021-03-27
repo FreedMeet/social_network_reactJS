@@ -15,10 +15,8 @@ export type FormDataType = {
 
 const Login = () => {
 
-    const [isAuth, captchaUrl] = useSelector((state: appStateType) => [
-        state.auth.isAuth,
-        state.auth.captchaUrl
-    ])
+    const isAuth = useSelector((state: appStateType) => state.auth.isAuth)
+    const captchaUrl = useSelector((state: appStateType) => state.auth.captchaUrl)
 
     const dispatch = useDispatch();
 

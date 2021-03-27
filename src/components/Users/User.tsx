@@ -1,10 +1,9 @@
 import classes from './Users.module.css'
 import userPhoto from '../../assets/images/users.png'
-import {NavLink} from 'react-router-dom';
-import Button from "../Common/button/Button";
+import {NavLink} from 'react-router-dom'
+import Button from "../Common/button/Button"
 import React, {FC} from 'react'
-import {UsersType} from "../../types/types";
-//TODO fixed follow/unfollow button
+import {UsersType} from "../../types/types"
 
 type PropsType = {
     user: UsersType
@@ -50,5 +49,5 @@ const User: FC<PropsType> = React.memo(({user, followingInProgress, unFollowTC, 
             </div>
 
         </div>)
-});
+})
 export default User

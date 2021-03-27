@@ -28,13 +28,10 @@ type PropsType = {
 
 const ProfileContainer: FC<PropsType> = ({match: {params: {userId}}}) => {
 
-    const [profile, status, myUserId] = useSelector(
-        (state: appStateType) => [
-            state.profilePage.profile,
-            state.profilePage.status,
-            state.auth.userId
-        ]
-    );
+    const profile = useSelector((state: appStateType) => state.profilePage.profile)
+    const status = useSelector((state: appStateType) => state.profilePage.status)
+    const myUserId = useSelector((state: appStateType) => state.auth.userId)
+
     const dispatch = useDispatch();
 
     const refreshProfile = useCallback(() => {

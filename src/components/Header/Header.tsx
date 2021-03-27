@@ -8,10 +8,8 @@ import {appStateType} from "../../redux/redux-store";
 
 const Header = () => {
 
-    const [isAuth, login] = useSelector((state: appStateType) => [
-        state.auth.isAuth,
-        state.auth.login
-    ]);
+    const isAuth = useSelector((state: appStateType) => state.auth.isAuth)
+    const login = useSelector((state: appStateType) => state.auth.login)
 
     const dispatch = useDispatch();
     const logout = useCallback(() => {

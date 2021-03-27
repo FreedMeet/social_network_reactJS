@@ -7,6 +7,7 @@ type PropsType = {
     className?: string
     disabled?: boolean
     onClick?:(event: React.MouseEvent) => void
+    type?: "button" | "submit" | "reset" | undefined
 }
 
 const Button: FC<PropsType> = ({width, height, ...props}) => {

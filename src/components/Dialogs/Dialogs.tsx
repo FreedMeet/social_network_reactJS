@@ -8,12 +8,9 @@ import DialogsForm from "./DialogsForm";
 import {appStateType} from "../../redux/redux-store";
 
 const Dialogs = () => {
-    const [MessageData, DialogsData] = useSelector(
-        (state: appStateType) =>
-            [
-                state.messagePage.MessageData,
-                state.messagePage.DialogsData
-            ]);
+
+    const MessageData = useSelector((state: appStateType) => state.messagePage.MessageData)
+    const DialogsData = useSelector((state: appStateType) => state.messagePage.DialogsData)
 
     const dispatch = useDispatch();
 

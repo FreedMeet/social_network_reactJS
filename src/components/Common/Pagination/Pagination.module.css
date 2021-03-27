@@ -15,8 +15,3 @@
     width: 100%;
     justify-content: space-around;
 }
-
-.active{
-    background-color: #000 !important;
-    color: #fff;
-}
