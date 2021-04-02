@@ -11,7 +11,7 @@ const DialogsForm: FC<InjectedFormProps<MessageType>> = ({handleSubmit}) => {
         <form className={classes.form} onSubmit={handleSubmit}>
             {createField<MessageFormValueTypeKeys>('You`r message...', 'newMessageText',
             [required], Textarea)}
-            <Button width={'10%'} height={'104px'}>send</Button>
+            <Button width={'100px'} height={'100px'}>send</Button>
         </form>
     );
 };

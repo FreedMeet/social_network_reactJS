@@ -6,6 +6,7 @@ import usersReducer from "./usersReducer"
 import appReducer from "./appReducer"
 import {reducer as formReducer} from 'redux-form'
 import {Action} from "redux";
+import chatReducer from "./chatReducer";
 
 const { createStore, combineReducers, applyMiddleware } = require("redux")
 
@@ -15,7 +16,8 @@ let rootReducer = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     form: formReducer,
-    app: appReducer
+    app: appReducer,
+    chat: chatReducer
 })
 
 type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never

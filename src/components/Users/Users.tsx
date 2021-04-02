@@ -5,11 +5,16 @@ import {appStateType} from "../../redux/redux-store"
 import classes from "./Users.module.css";
 import Preloader from "../Common/Preloader/Preloader";
 import Pagination from "../Common/Pagination/Pagination";
-import User from "./User";
+import {User} from "./User";
 import {UsersSearchForm} from "./UsersSearchForm";
 import {UsersType} from "../../types/types";
+import {useHistory} from "react-router-dom"
+import queryString from "querystring";
+import {FollowedUsers} from "./FollowedUsers";
 
-const UsersContainer = () => {
+export const Users = () => {
+
+    type QueryParamsType = { term?: string, page?: string, friend?: string }
 
     const users = useSelector((state: appStateType) => state.usersPage.users)
     const pageSize = useSelector((state: appStateType) => state.usersPage.pageSize)
@@ -20,10 +25,38 @@ const UsersContainer = () => {
     const filter = useSelector((state: appStateType) => state.usersPage.filter)
 
     const dispatch = useDispatch()
+    const history = useHistory();
 
     useEffect(() => {
-        dispatch(getUsersTC(currentPage, pageSize, filter))
+        const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (!!parsed.page) actualPage = Number(parsed.page)
+        if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+        if (!!parsed.friend) actualFilter = {
+            ...actualFilter,
+            friend: parsed.friend === 'null'
+                ? null
+                : parsed.friend === 'true' ? true : false
+        }
+
+        dispatch(getUsersTC(actualPage, pageSize, actualFilter))
     }, [])
+
+    useEffect(() => {
+
+        const query: QueryParamsType = {}
+
+        if (!!filter.term) query.term = filter.term
+        if (filter.friend !== null) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
 
     const onPageChanged = (pageNumber: number) => {
         dispatch(getUsersTC(pageNumber, pageSize, filter))
@@ -51,15 +84,15 @@ const UsersContainer = () => {
                     />
                     {
                         users.map((u: UsersType) => <User key={u.id} user={u} followingInProgress={followingInProgress}
-                                             unFollowTC={unFollow} followTC={follow}
+                                                          unFollowTC={unFollow} followTC={follow}
                             />
                         )
                     }
                 </div>}
-
-            <UsersSearchForm onFilterChanged={onFilterChanged}/>
+            <div className={classes.followedUsersBlock}>
+                <UsersSearchForm onFilterChanged={onFilterChanged}/>
+                <FollowedUsers />
+            </div>
         </div>
     </>
 }
-
-export default UsersContainer

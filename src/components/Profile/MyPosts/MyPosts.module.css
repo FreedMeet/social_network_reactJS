@@ -1,10 +1,11 @@
 .posts{
     padding: 20px;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 10px;
     height: 60vh;
     overflow: scroll;
     width: 60%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 .formPost textarea{
@@ -22,7 +23,7 @@
     height: 100px;
     font-size: 16px;
 
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 10px;
 }
 

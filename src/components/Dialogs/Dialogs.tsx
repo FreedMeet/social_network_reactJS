@@ -6,6 +6,7 @@ import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import DialogsForm from "./DialogsForm";
 import {appStateType} from "../../redux/redux-store";
+import {reset} from "redux-form";
 
 const Dialogs = () => {
 
@@ -16,6 +17,7 @@ const Dialogs = () => {
 
     const onSubmit = (formData: any) => {
         dispatch(actions.sendMessage(formData.newMessageText));
+        dispatch(reset('dialogs'))
     };
 
     return (

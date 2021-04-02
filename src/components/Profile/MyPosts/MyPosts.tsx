@@ -1,9 +1,10 @@
 import React, {FC} from 'react'
 import classes from './MyPosts.module.css'
 import Post from './Post/Post'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import MyPostForm from "./MyPostsForm";
 import {appStateType} from "../../../redux/redux-store";
+import {reset} from 'redux-form';
 
 export type PostObjectType = {
     message: string
@@ -16,6 +17,9 @@ type PropsType = {
 }
 
 const MyPosts: FC<PropsType> = React.memo(({addNewPost}) => {
+
+    const dispatch = useDispatch()
+
     const PostsData = useSelector((state: appStateType) => state.profilePage.PostsData);
 
     let PostsElements = PostsData.map(
@@ -25,6 +29,7 @@ const MyPosts: FC<PropsType> = React.memo(({addNewPost}) => {
 
     const onSubmit = (formData: any) => {
         addNewPost(formData.newPostText);
+        dispatch(reset('myPosts'))
     };
 
     return (
